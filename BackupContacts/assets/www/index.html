@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>BackupContacts</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	<link rel="stylesheet" href="jquery.mobile-1.3.0.css" />
+	<script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="jquery.mobile-1.3.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="backupcontacts.js"></script>
+	<script type="text/javascript" charset="utf-8" src="importcontacts.js"></script>
+
+	<script>
+    	function onLoad() {
+    		document.addEventListener("deviceready", onDeviceReady, false);
+    	}
+    </script>
+	</head> 
+
+<body onload="onLoad();"> 
+
+<div data-role="page" id="paginaPrincipal">
+	<div data-role="header">
+		<h2>Backup Contacts</h2>
+	</div>
+	
+	<div data-role="content">
+		<div class="content-primary">
+	
+	 		<div align="center">
+	 			<!--
+				<a href="#" onclick = 'realizarBackup();' data-role="button" data-mini="true" data-inline="true" data-icon="check" data-theme="e">Realizar Backup de Contactos</a>
+				
+				
+				-->
+				<button onclick = 'realizarBackup();' class="show-page-loading-msg" data-theme="e" data-textonly="false" data-textvisible="true" data-msgtext="Realizando Backup de Contactos..." data-icon="arrow-r" data-iconpos="right">Realizar Backup de Contactos</button>
+			</div>
+			<br>
+			<div align="center">
+				<!--
+				<a href="#" onclick = 'importarBackupContactos();' data-role="button" data-mini="true" data-inline="true" data-icon="check" data-theme="e">Importar Backup de Contactos</a>
+				-->
+				<button onclick = 'importarBackupContactos();' class="show-page-loading-msg" data-theme="e" data-textonly="false" data-textvisible="true" data-msgtext="Importando Backup de Contactos..." data-icon="arrow-r" data-iconpos="right">Importar Backup de Contactos</button>
+			</div>
+	
+		</div>
+	</div>
+	
+    
+</div> 
+
+</body>
+</html>
