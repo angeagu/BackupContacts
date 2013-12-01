@@ -3,9 +3,11 @@
       package="org.android.backupcontacts"
       android:versionCode="1"
       android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="13" />
+    <uses-sdk android:minSdkVersion="7" />
     
+    <!-- 
     <feature name="http://api.phonegap.com/1.0/contacts"/>
+    -->
     
     <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.VIBRATE" />

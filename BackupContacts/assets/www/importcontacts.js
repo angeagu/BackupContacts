@@ -1,128 +1,121 @@
 
+
 var fReader;
+
 
 function importarBackupContactos() {
 
-//Creamos un contacto de prueba y lo guardamos   
-	alert('entrando en importarBackupContactos()');
+	//Creamos un contacto de prueba y lo guardamos   
+	//alert('entrando en importarBackupContactos()');
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, obtenerFicheroImportar, errorFichero);
 }
-
+ 
 function obtenerFicheroImportar(fileSystem) {
-		alert("Nombre: " + fileSystem.name);
-		alert("Root: " + fileSystem.root.fullPath);
+		//alert("Nombre: " + fileSystem.name);
+		//alert("Root: " + fileSystem.root.fullPath);
         fileSystem.root.getFile("contacts.xml", {create: true, exclusive: false}, gotFileEntryImportar, errorFichero);
+        
     }
     
 function gotFileEntryImportar(fileEntry) {
-	alert('entrando en gotFileEntryImportar');
+	//alert('entrando en gotFileEntryImportar');
 	fileEntry.file(gotFileImportar, errorFichero);
 }
 
 function gotFileImportar(file) {
 	fReader = new FileReader();
 	fReader.onloadend = function (event) {
-		alert('Fichero leido');
-		var xml = event.target.result;
-		procesarFicheroContactos(xml);
+	//alert('Fichero leido');
+	var xml = event.target.result;
+	procesarFicheroContactos(xml);
+	
 	}
+	
 	fReader.readAsText(file);
 	
 }
 
 function procesarFicheroContactos(xml) {
 	
-	alert('procesarFicheroContactos');
+	
+	//alert('procesarFicheroContactos');
 	
 	//Creamos un contacto de prueba y lo guardamos
 	/*
 	var contact2 = navigator.contacts.create();
-	contact2.id = "9999";
 	contact2.displayName = "AaPrueba Display Name";
-    var contactName = new ContactName();
-	contactName.formatted = "AaPrueba Name";
-	contact2.name = contactName;
-    alert(5);
-    //contact2.phoneNumbers = "[9999999999]";
-    //contact2.emails = "[yo@yo.com]";
-    //contact2.save(contactoGuardado,errorGuardarContacto);
+        
+    var phoneNumbers = [];
+	phoneNumbers[0] = new ContactField('work', '123456789', false);
+	phoneNumbers[1] = new ContactField('mobile', '987654321', true); // preferred number
+    contact2.phoneNumbers = phoneNumbers;
+    
     alert(6);
+    contact2.save(contactoGuardado,errorGuardarContacto);
+    alert(7);
 	*/
-	
+
 	$(xml).find("contacto").each(function() {
 		
 		//OJO!!! el metodo create crea el contacto pero no lo salva.
 		var contact = navigator.contacts.create();
 		
-		var id = $(this).find("id").text();
-		contact.id = id;
-		
 		var displayname = $(this).find("displayname").text();
-		contact.displayName = displayname;
 		
 		var nombre = $(this).find("nombre").text();
-		var contactName = new ContactName();
-		contactName.formatted = nombre;
-		contact.name = contactName;
+		contact.displayName = nombre;
 		
-		var telefonos = $(this).find("telefono").text();
-		/*
-		if (telefonos.length > 0) {
-			var arrayTelefonos = telefonos.split(" ");
+		var telefono = $(this).find("telefono").text();
+		//alert("telefono: " + telefono);
+		
+		if (telefono.length > 0) {
 			var phoneNumbers = [];
-			for (int i=0; i<arrayTelefonos.length; i++) {
-				phoneNumbers[i] = new ContactField('',arrayTelefonos[i],"false");
-			}
+			phoneNumbers[0] = new ContactField('mobile',telefono,true);
 			contact.phoneNumbers = phoneNumbers;
 		}
-		*/
+		
 		
 		var emails = $(this).find("email").text();
-		/*
-		if (email.length > 0) {
-			var arrayEmails = emails.split(" ");
+		
+		if (emails.length > 0) {
 			var dirEmails = [];
-			for (int i=0; i<arrayEmails.length; i++) {
-				var contactAddress = new ContactAddress();
-				contactAddress.pref = false;
-				contactAddress.formatted = arrayEmails[i];
-				dirEmails[i] = contactAddress;
-			}
+			var contactAddress = new ContactAddress();
+			contactAddress.pref = false;
+			contactAddress.formatted = emails;
+			dirEmails[0] = contactAddress;
+			
 			contact.emails = dirEmails;
 		}
-		*/
-		var info = 'id: ' + id + '\n';
-			info = info + 'displayname: ' + displayname + '\n';
-			info = info + 'nombre: ' + nombre + '\n';
-			info = info + 'telefonos: ' + telefonos + '\n';
-			info = info + 'email: ' + emails;
-		alert(info);
 		
-		/* OJO! Descomentar esta parte para crear contactos */
+		
+		var	info = 'displayname: ' + displayname + '\n';
+			info = info + 'nombre: ' + nombre + '\n';
+			info = info + 'telefono: ' + telefono + '\n';
+			info = info + 'email: ' + emails;
+		//alert(info);
+		
 		//para almacenar el contacto, descomentar la operacion save.
-		//contact.save(contactoGuardado,errorGuardarContacto);
+		contact.save(contactoGuardado,errorGuardarContacto);
 		
 	});
 	
-	
+	alert('Importacion de contactos finalizada correctamente');
 	
 }
 
 function errorFichero(error) {
-        //alert('Error al realizar operación de ficheros: ' + error.message);
-        console.log(error.code);
-        
+    //alert('Error al realizar operación de ficheros: ' + error.message);
+    console.log(error.code);        
     }
     
 function contactoGuardado(contact) {
-	alert ('contacto guardado correctamente');
+	//alert ('contacto guardado correctamente');
 	console.log('contacto guardado correctamente');
-
 	}
 	
 function errorGuardarContacto(contactError) {
-	alert("Error al guardar contacto:  " + contactError.code);
-	alert("Error al guardar contacto:  " + contactError.message);
+	//alert("Error al guardar contacto:  " + contactError.code);
+	//alert("Error al guardar contacto:  " + contactError.message);
 	console.log("Error al guardar contacto:  " + contactError.code);
 	
 }

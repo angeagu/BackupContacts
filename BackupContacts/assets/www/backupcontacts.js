@@ -2,6 +2,7 @@
 var fWriter;
 var escrituraFinalizada = false;
 
+
 function onDeviceReady() {
 	//alert('onDeviceReady');
 	$(document).on( "click", ".show-page-loading-msg", function() {
@@ -36,7 +37,7 @@ function backupContactos(contactos) {
     if (fWriter!= null && fWriter != undefined) {
 	 	//alert("FWriter creado correctamente");
 	 }
-	//alert('El backup de ' + contactos.length + ' contactos se realizara en la ruta: ' + fWriter.fileName);
+	alert('El backup de ' + contactos.length + ' contactos se realizara en la ruta: ' + fWriter.fileName);
 	var info = '<listacontactos>' + '\n';
 	
 	for (var i=0; i<contactos.length; i++) {
@@ -66,7 +67,7 @@ function backupContactos(contactos) {
 		}
 		info = info + "\t" + "</contacto>" + "\n";
 		
-		if ( i!=0 && (i%50) == 0) {
+		if ( i!=0 && (i%20) == 0) {
 			fWriter.seek(fWriter.length);
 			fWriter.write(info);
 			while (escrituraFinalizada == false) {
@@ -79,9 +80,10 @@ function backupContactos(contactos) {
 	info = info + '</listacontactos>' + '\n';
 	fWriter.seek(fWriter.length);
 	fWriter.write(info);
-	alert('Backup Finalizado Correctamente');
 	$.mobile.loading( "hide" );
+	alert('Backup Finalizado Correctamente');
 	fWriter.abort();
+	
 }
 
 function obtenerFichero(fileSystem) {
